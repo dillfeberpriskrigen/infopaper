@@ -50,27 +50,22 @@ def text(text,x,y, color,font, fontsize=65, rightalign=0, heightalign=0,wallpape
         x = w -rightalign-(x-w)
     #y = y + heightalign
     image =  Image.open(wallpaper)
-    print(font)
-    print(type(font))
-    font = ImageFont.truetype('DejaVuSans-Bold.ttf',fontsize) # Font borde definieras i en config
+    font = ImageFont.truetype('resources/'+font,fontsize) #Hardcoded, fix
     draw = ImageDraw.Draw(image)
     x_mod, y_mod = draw.textbbox((0,0),text,font)[2:] #Returnerar bredd och höjd av textobjektet 
     if x + x_mod > w: #Gör så att texten inte skrivs utanför bilden
         print("x: ",x,"w: ",w,"bound: ",x_mod,"x+bound: ",x+x_mod)
         x = w-x_mod-65
-        #print(x)
     if y + y_mod > h:
         y -= y_mod
-# Behöver skapa en draw funktion
     draw.text((x,y), str(text), font=font, fill=(color))
-    image.save(infoPaperPath) #Config
+    image.save(infoPaperPath)
 
 
 
 
 def longest_text(textlist, fontsize) -> int :
-    wallpaper = infoPaperPath #Config
-    #font = ImageFont.truetype('/usr/share/fonts/TTF/OpenSans-Bold.ttf',fontsize)
+    wallpaper = infoPaperPath 
     font = ImageFont.truetype('DejaVuSans-Bold.ttf',fontsize) # Config
     image =  Image.open(wallpaper)
     draw = ImageDraw.Draw(image)
@@ -86,7 +81,6 @@ def longest_text(textlist, fontsize) -> int :
 
 def cal_coordinates(posx = 200,posy = 200, fontsize = 20, color = colors[2]) -> None :
     today = datetime.date.today()
-#debugtest    today = datetime.date(2022, 4, 18)
     day = today.strftime("%d")
     fontwidth = fontsize*1.83 #Borde kunna justeras genom att ta en teckenkombination som är typ, den bredaste typ "  " och hämta draw.textbbox för att få den faktiska fontbredden och höjden. ## FRAMTIDA FILIP HÄR: Ja absolut, det enda jag behöver göra är att räkna antalet tecken och sedan ta mellanslagsbredden och multiplicera med antalet tecken. Det här skulle kunna göras separat så att det enbart behöver göras på uppstart... Fast, eller nej. Det måste göras per antalet fonts. Så jag behöver ha en font-lista och generera en font-bredd dict. 
     fontheight =  fontsize*1.15 # Det funkar, borde funka bättre.
@@ -97,8 +91,8 @@ def cal_coordinates(posx = 200,posy = 200, fontsize = 20, color = colors[2]) -> 
     month = today.strftime("%m")
     ascii_calendar = calendar.month(int(year),int(month))
     cal = [date.split() for date in ascii_calendar.strip().split("\n")]
-    week = {'Mon': 1,'Tue': 2,'Wed': 3,'Thu': 4,'Fri': 5,'Sat': 6,'Sun': 7} #Kanske är onödig nu. Ska vi inte testa att ta bort den då?
-    weeknum = 0
+    week = {'Mon': 1,'Tue': 2,'Wed': 3,'Thu': 4,'Fri': 5,'Sat': 6,'Sun': 7} 
+    weeknum = 0 #Hardcoded
     day = int(day)
     # Add offset based on the first day of this month
     day += datetime.date(today.year, today.month, 1).weekday()-1
@@ -111,7 +105,7 @@ def cal_coordinates(posx = 200,posy = 200, fontsize = 20, color = colors[2]) -> 
     weekday_number = int(week.get(today.strftime("%a")))
     weekday_number = weekday_number -1
 
-    image =  Image.open(infoPaperPath) #Config
+    image =  Image.open(infoPaperPath) 
     draw = ImageDraw.Draw(image)
     x_marker = posx+(fontwidth*weekday_number)
     y_marker = posy+fontheight*weeknum
@@ -121,26 +115,15 @@ def cal_coordinates(posx = 200,posy = 200, fontsize = 20, color = colors[2]) -> 
     font = ImageFont.truetype('/usr/share/fonts/TTF/DejaVuSansMono.ttf',fontsize) #Config
     draw.rounded_rectangle((shape))
     draw.text((posx,posy), str(ascii_calendar), font=font, fill=(colors[2])) 
-    image.save(infoPaperPath) # Config
+    image.save(infoPaperPath) 
 
 def wttr(config: dict):
-    """
-    Get weather forecast for a city using wttr.in, fully configurable via a dictionary.
-    Default is wttr in the config.json.
-
-    config keys:
-        city: str - city name
-        hours: list[int] - hourly indexes to include
-        properties: list[str] - weather properties to extract
-        transpose_times: list[str] - labels for the hours (for display)
-    """
     city = config.get("city", "Linköping")
     hours = config.get("hours", [3, 4, 5, 6])
     Propertylist = config.get("properties", ["time","tempC","FeelsLikeC","chanceofrain","precipMM","humidity","windspeedKmph"])
     transpose_times = config.get("transpose_times", ["09:00", "12:00", "15:00", "18:00"])
 
     url = f"http://wttr.in/{city}?format=j1"
-    print(url)
     response = requests.get(url)
     jsonny = response.json()
 
@@ -152,7 +135,7 @@ def wttr(config: dict):
         result.append(proppie)
 
     transpose = np.array(result).T.tolist()
-    transpose[1] = ["Time"] + transpose_times  # replace time row with readable times
+    transpose[1] = ["Time"] + transpose_times 
 
     lsty = []
     for i in range(1, len(transpose[0])):
