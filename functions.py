@@ -1,12 +1,4 @@
 #!/usr/bin/python3
-
-#########################################
-#Script Name:				#
-#Decription: 				#
-#Args:					#
-#Author:				#
-#Email:					#
-####################################
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
@@ -22,7 +14,7 @@ import requests
 import numpy as np
 pwd = os.path.dirname(__file__)+'/' # Config
 wallpaper = pwd+'/resources/background.png' # Config 
-
+infoPaperPath = pwd+'resources/infopaper.png'
 
 def decode(var):
     var = var.decode('utf-8')  # Config
@@ -52,7 +44,7 @@ def checkupdate() -> str:
         return "" #Måste returnera str
 
 
-def text(text,x,y, color, fontsize=65, rightalign=0, heightalign=0,wallpaper = pwd+'infopaper.png') -> None : #Outputfilen borde definieras i en config fil
+def text(text,x,y, color,font, fontsize=65, rightalign=0, heightalign=0,wallpaper = infoPaperPath) -> None : #Outputfilen borde definieras i en config fil
     w,h = dimensions()
     if rightalign != 0:
         x = w -rightalign-(x-w)
@@ -70,13 +62,13 @@ def text(text,x,y, color, fontsize=65, rightalign=0, heightalign=0,wallpaper = p
         y -= y_mod
 # Behöver skapa en draw funktion
     draw.text((x,y), str(text), font=font, fill=(color))
-    image.save(pwd+'infopaper.png') #Config
+    image.save(infoPaperPath) #Config
 
 
 
 
 def longest_text(textlist, fontsize) -> int :
-    wallpaper = pwd+'infopaper.png' #Config
+    wallpaper = infoPaperPath #Config
     #font = ImageFont.truetype('/usr/share/fonts/TTF/OpenSans-Bold.ttf',fontsize)
     font = ImageFont.truetype('DejaVuSans-Bold.ttf',fontsize) # Config
     image =  Image.open(wallpaper)
@@ -96,7 +88,7 @@ def cal_coordinates(posx = 200,posy = 200, fontsize = 20, color = colors[2]) -> 
 #debugtest    today = datetime.date(2022, 4, 18)
     day = today.strftime("%d")
     fontwidth = fontsize*1.83 #Borde kunna justeras genom att ta en teckenkombination som är typ, den bredaste typ "  " och hämta draw.textbbox för att få den faktiska fontbredden och höjden. ## FRAMTIDA FILIP HÄR: Ja absolut, det enda jag behöver göra är att räkna antalet tecken och sedan ta mellanslagsbredden och multiplicera med antalet tecken. Det här skulle kunna göras separat så att det enbart behöver göras på uppstart... Fast, eller nej. Det måste göras per antalet fonts. Så jag behöver ha en font-lista och generera en font-bredd dict. 
-    fontheight =  fontsize*1.15 # Det här känns korkat.
+    fontheight =  fontsize*1.15 # Det funkar, borde funka bättre.
     if day[0] == '0':
         day = day.lstrip('0')
 
@@ -118,7 +110,7 @@ def cal_coordinates(posx = 200,posy = 200, fontsize = 20, color = colors[2]) -> 
     weekday_number = int(week.get(today.strftime("%a")))
     weekday_number = weekday_number -1
 
-    image =  Image.open(pwd+'infopaper.png') #Config
+    image =  Image.open(infoPaperPath) #Config
     draw = ImageDraw.Draw(image)
     x_marker = posx+(fontwidth*weekday_number)
     y_marker = posy+fontheight*weeknum
@@ -128,11 +120,12 @@ def cal_coordinates(posx = 200,posy = 200, fontsize = 20, color = colors[2]) -> 
     font = ImageFont.truetype('/usr/share/fonts/TTF/DejaVuSansMono.ttf',fontsize) #Config
     draw.rounded_rectangle((shape))
     draw.text((posx,posy), str(ascii_calendar), font=font, fill=(colors[2])) 
-    image.save(pwd+'infopaper.png') # Config
+    image.save(infoPaperPath) # Config
 
 def wttr(config: dict):
     """
     Get weather forecast for a city using wttr.in, fully configurable via a dictionary.
+    Default is wttr in the config.json.
 
     config keys:
         city: str - city name
@@ -149,20 +142,16 @@ def wttr(config: dict):
     response = requests.get(url)
     jsonny = response.json()
 
-    # Prepare header
     result = [["Desc", "Time", "Temp", "Feels like", "% rain", "Precipitation", "Humidity", "Windspeed"]]
 
-    # Extract hourly data based on config
     for hour in hours:
         proppie = [jsonny["weather"][0]["hourly"][hour]["weatherDesc"][0]["value"]] + \
                   [jsonny["weather"][0]["hourly"][hour][prop] for prop in Propertylist]
         result.append(proppie)
 
-    # Transpose to reorganize data
     transpose = np.array(result).T.tolist()
     transpose[1] = ["Time"] + transpose_times  # replace time row with readable times
 
-    # Build final list of formatted strings
     lsty = []
     for i in range(1, len(transpose[0])):
         temp = f"{transpose[0][i]} at {transpose[1][i]}. Temp: {transpose[2][i]} Feels like: {transpose[3][i]}. %-rain: {transpose[4][i]} rain: {transpose[5][i]}"

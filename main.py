@@ -8,10 +8,8 @@ import datetime
 import time
 import json
 from zoneinfo import ZoneInfo
-#from weather import *
 
 pwd = os.path.dirname(__file__)+'/'
-wallpaper = pwd+'/resources/background.png'
 
 from functions import decode, dimensions,checkupdate, text, longest_text, cal_coordinates, wttr
 from schemaprint import schemaprint
@@ -20,6 +18,7 @@ with open("config.json", "r", encoding="utf-8") as f:
     Config = json.load(f)
 
 
+wallpaper = pwd+Config["files"]["infile_path"]
 
 
 def main():
@@ -54,21 +53,21 @@ textheight=65
 textlist = [date,weekday,checkupdate()]
 rightalign,heightalign=longest_text(textlist,65)
 
-text(date, w-xmidhalf-65,h-ymidhalf,colors[1],65,rightalign,0, wallpaper)
-text(weekday, w-xmidhalf-65, h+65-ymidhalf,colors[3],65, rightalign)
+text(date,w-xmidhalf-65,h-ymidhalf,colors[1],Config["files"]["font"],Config["files"]["fontsize_big"],rightalign,0, wallpaper)
+text(weekday, w-xmidhalf-65, h+65-ymidhalf,colors[3],Config["files"]["font"],Config["files"]["fontsize_big"], rightalign)
 
-text(checkupdate(),w-xmidhalf-65,h+textheight*2-ymidhalf,colors[2],65,rightalign)
+text(checkupdate(),w-xmidhalf-65,h+textheight*2-ymidhalf,colors[2],Config["files"]["font"],Config["files"]["fontsize_big"],rightalign)
 
-wttr_list = wttr(CONFIG)
+wttr_list = wttr(Config["wttr"])
 for i in range(len(wttr_list)):
-    text(wttr_list[i],w-xmidhalf-65,100+40*i,colors[1],20,rightalign)
+    text(wttr_list[i],w-xmidhalf-65,100+40*i,colors[1],Config["files"]["font"],Config["files"]["fontsize_small"],rightalign)
 
 if rebootcheck != "No reboot required.":
-    text("Reboot required", xcorner,h-ycorner, colors[2],20)
+    text("Reboot required", xcorner,h-ycorner, colors[2],Config["files"]["font"],Config["files"]["fontsize_small"])
 
 cal_coordinates(xcorner,h-ymidhalf)
 #schemalist = schemaprint() # Har inte haft ett schema där på år
 #for i in range(len(schemalist)):
 #    text(schemalist[i], xcorner,ymidhalf+40*i,colors[1],20,0,0)
 ## End of program update wallpaper ##
-subprocess.run(["feh","--bg-max",pwd+"/resources/infopaper.png" ])
+subprocess.run([Config["files"]["background_setter"],Config["files"]["setter_args"],pwd+"/resources/infopaper.png" ]) #Look into how backgrounds are set again. This is a security risk.
