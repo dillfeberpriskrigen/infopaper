@@ -66,6 +66,6 @@ def schemaprint() -> list:
         return_list.extend(schemaloop(gcal,tomorrow))
 
     if slackercount == 2:
-        return_list.append("Amenvafan va tomt det är, går man filfack eller!")
+        return_list.append("Amen va tomt det är, går man filfack eller!")
     g.close()
     return return_list
