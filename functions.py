@@ -31,7 +31,7 @@ def checkupdate() -> str:
 
     updatelist = None
     try:
-        updatelist = subprocess.check_output(["checkupdates"])
+        updatelist = subprocess.check_output(["checkupdates"]) #Arch dependant
         updatelist= decode(updatelist)
         updatelist = updatelist.split('\n')
 
@@ -50,7 +50,8 @@ def text(text,x,y, color,font, fontsize=65, rightalign=0, heightalign=0,wallpape
         x = w -rightalign-(x-w)
     #y = y + heightalign
     image =  Image.open(wallpaper)
-    #font = ImageFont.truetype('/usr/share/fonts/TTF/OpenSans-Bold.ttf',fontsize)
+    print(font)
+    print(type(font))
     font = ImageFont.truetype('DejaVuSans-Bold.ttf',fontsize) # Font borde definieras i en config
     draw = ImageDraw.Draw(image)
     x_mod, y_mod = draw.textbbox((0,0),text,font)[2:] #Returnerar bredd och höjd av textobjektet 
@@ -139,6 +140,7 @@ def wttr(config: dict):
     transpose_times = config.get("transpose_times", ["09:00", "12:00", "15:00", "18:00"])
 
     url = f"http://wttr.in/{city}?format=j1"
+    print(url)
     response = requests.get(url)
     jsonny = response.json()
 

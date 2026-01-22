@@ -51,7 +51,7 @@ ycorner = h/15
 textheight=65
 
 textlist = [date,weekday,checkupdate()]
-rightalign,heightalign=longest_text(textlist,65)
+rightalign,heightalign=longest_text(textlist,Config["files"]["fontsize_big"])
 
 text(date,w-xmidhalf-65,h-ymidhalf,colors[1],Config["files"]["font"],Config["files"]["fontsize_big"],rightalign,0, wallpaper)
 text(weekday, w-xmidhalf-65, h+65-ymidhalf,colors[3],Config["files"]["font"],Config["files"]["fontsize_big"], rightalign)
