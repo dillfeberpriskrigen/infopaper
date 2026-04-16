@@ -9,3 +9,6 @@ resources/DejaVuSans-Bold.ttf
 DejaVuSans-Bold.ttf
 infopaper.png
 resources/infopaper.png
+data/daodejing
+data/daodejing_chapters/*
+data/daodejing_chapters/
