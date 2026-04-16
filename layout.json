@@ -1,0 +1,113 @@
+{
+  "text": {
+    "date": {
+      "x": { "mode": "from_right_fraction", "value": 4, "margin": 65 },
+      "y": { "mode": "from_bottom_fraction", "value": 4, "margin": 0 },
+      "font": "DejaVuSans-Bold.ttf",
+      "fontsize": 65,
+      "color": 1,
+      "use_rightalign": true
+    },
+    "weekday": {
+      "x": { "mode": "from_right_fraction", "value": 4, "margin": 65 },
+      "y": { "mode": "from_bottom_fraction", "value": 4, "margin": -65 },
+      "font": "DejaVuSans-Bold.ttf",
+      "fontsize": 65,
+      "color": 3,
+      "use_rightalign": true
+    },
+    "updates": {
+      "x": { "mode": "from_right_fraction", "value": 4, "margin": 65 },
+      "y": { "mode": "from_bottom_fraction", "value": 4, "margin": -130 },
+      "font": "DejaVuSans-Bold.ttf",
+      "fontsize": 65,
+      "color": 2,
+      "use_rightalign": true,
+      "visible": true
+    },
+    "reboot": {
+      "x": { "mode": "from_left_fraction", "value": 16, "margin": 0 },
+      "y": { "mode": "from_bottom_fraction", "value": 15, "margin": 0 },
+      "font": "DejaVuSans-Bold.ttf",
+      "fontsize": 20,
+      "color": 2,
+      "content": "Reboot required",
+      "visible": true
+    }
+  },
+  "weather": {
+    "x": { "mode": "from_right_fraction", "value": 4, "margin": 65 },
+    "y": { "mode": "absolute", "value": 100 },
+    "font": "DejaVuSans-Bold.ttf",
+    "fontsize": 20,
+    "color": 1,
+    "use_rightalign": true,
+    "line_spacing": 40,
+    "visible": true
+  },
+  "schedule": {
+    "x": { "mode": "from_left_fraction", "value": 16, "margin": 0 },
+    "y": { "mode": "absolute", "value": 180 },
+    "font": "DejaVuSans-Bold.ttf",
+    "fontsize": 20,
+    "color": 1,
+    "line_spacing": 30,
+    "visible": true
+  },
+  "calendar": {
+    "x": { "mode": "from_left_fraction", "value": 16, "margin": 0 },
+    "y": { "mode": "from_bottom_fraction", "value": 4, "margin": 0 },
+    "fontsize": 20,
+    "color": 2,
+    "visible": true
+  },
+  "hello_world": {
+    "x": { "mode": "absolute", "value": 120 },
+    "y": { "mode": "absolute", "value": 120 },
+    "font": "DejaVuSans-Bold.ttf",
+    "fontsize": 20,
+    "color": 5,
+    "visible": false
+  },
+  "custom_lines": {
+    "x": { "mode": "absolute", "value": 120 },
+    "y": { "mode": "absolute", "value": 170 },
+    "font": "DejaVuSans-Bold.ttf",
+    "fontsize": 20,
+    "color": 3,
+    "line_spacing": 30,
+    "visible": false
+  },
+  "qotd_quote": {
+    "x": { "mode": "absolute", "value": 120 },
+    "y": { "mode": "absolute", "value": 320 },
+    "font": "DejaVuSans-Bold.ttf",
+    "fontsize": 22,
+    "color": 1,
+    "visible": false
+  },
+  "qotd_author": {
+    "x": { "mode": "absolute", "value": 120 },
+    "y": { "mode": "absolute", "value": 360 },
+    "font": "DejaVuSans-Bold.ttf",
+    "fontsize": 18,
+    "color": 3,
+    "visible": false
+  },
+  "qotd_lines": {
+    "x": { "mode": "absolute", "value": 120 },
+    "y": { "mode": "absolute", "value": 320 },
+    "font": "DejaVuSans-Bold.ttf",
+    "fontsize": 30,
+    "min_fontsize": 14,
+    "color": 1,
+    "visible": false,
+    "render_mode": "adaptive",
+    "text_align": "left",
+    "line_spacing_ratio": 0.3,
+    "box": {
+      "width": 520,
+      "height": 220
+    }
+  }
+}

@@ -1,6 +1,9 @@
 __pycache__
 resources/__pycache__
 scripts/__pycache__
+data/calendars/*.ics
+data/quotes/qotd_state.json
+data/custom/qotd.json
 config.json
 resources/DejaVuSans-Bold.ttf
 DejaVuSans-Bold.ttf

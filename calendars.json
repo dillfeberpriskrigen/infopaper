@@ -1,0 +1,15 @@
+{
+  "sources": [
+    {
+      "name": "Local schema file",
+      "local_path": "schema.ics",
+      "enabled": false
+    },
+    {
+      "name": "Example public ICS calendar",
+      "slug": "example-public-calendar",
+      "url": "https://example.com/calendar.ics",
+      "enabled": false
+    }
+  ]
+}

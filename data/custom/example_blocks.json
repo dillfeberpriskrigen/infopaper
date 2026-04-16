@@ -1,0 +1,7 @@
+{
+  "hello_world": "Hello world from JSON",
+  "custom_lines": [
+    "First custom line",
+    "Second custom line"
+  ]
+}

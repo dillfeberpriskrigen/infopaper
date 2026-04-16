@@ -1,0 +1,13 @@
+{
+  "quotes_path": "data/quotes/qotd_quotes.json",
+  "state_path": "data/quotes/qotd_state.json",
+  "output_path": "data/custom/qotd.json",
+  "mode": "random_no_repeat",
+  "include_author": true,
+  "author_prefix": "— ",
+  "output_keys": {
+    "quote": "qotd_quote",
+    "author": "qotd_author",
+    "combined": "qotd_lines"
+  }
+}
