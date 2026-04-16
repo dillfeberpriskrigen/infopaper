@@ -119,6 +119,20 @@ def _draw_custom_content(
             _draw_layout_text(image, content, block, files)
 
 
+def _resolve_reboot_content(block: dict[str, Any], status: str) -> str:
+    status_content = block.get("content_by_status", {})
+    if isinstance(status_content, dict):
+        content = status_content.get(status)
+        if isinstance(content, str):
+            return content
+
+    if status == "reboot":
+        return block.get("content", "Reboot required")
+    if status == "unknown":
+        return block.get("unknown_content", "")
+    return block.get("ok_content", "")
+
+
 def render_wallpaper(data: WallpaperData, config: dict, layout: dict) -> Path:
     files = config["files"]
     background_path = ROOT / files["infile_path"]
@@ -153,8 +167,10 @@ def render_wallpaper(data: WallpaperData, config: dict, layout: dict) -> Path:
     if schedule_block.get("visible", True):
         _draw_layout_text_lines(image, data.schedule_lines, schedule_block, files)
 
-    if data.reboot_required and text_blocks["reboot"].get("visible", True):
-        _draw_layout_text(image, text_blocks["reboot"].get("content", "Reboot required"), text_blocks["reboot"], files)
+    if text_blocks["reboot"].get("visible", True):
+        reboot_content = _resolve_reboot_content(text_blocks["reboot"], data.reboot_status)
+        if reboot_content:
+            _draw_layout_text(image, reboot_content, text_blocks["reboot"], files)
 
     if calendar_block.get("visible", True):
         draw_calendar(

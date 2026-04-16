@@ -22,7 +22,7 @@ class WallpaperData:
     weather_lines: list[str]
     schedule_lines: list[str]
     custom_content: dict[str, str | list[str]]
-    reboot_required: bool
+    reboot_status: str
 
 
 def collect_wallpaper_data(config: dict) -> WallpaperData:
@@ -32,7 +32,7 @@ def collect_wallpaper_data(config: dict) -> WallpaperData:
     date_label = now.strftime("%d/%m/%y")
     weekday_label = now.strftime("%A vecka %V")
 
-    reboot_output = subprocess.check_output([str(scripts_dir / "rebootcheck.sh")], text=True).strip()
+    reboot_status = _run_status_script(scripts_dir / "rebootcheck.sh")
     update_label = checkupdate()
     weather_lines = wttr(config["wttr"])
     schedule_lines = collect_schedule_lines(config.get("schedule", {}))
@@ -45,8 +45,21 @@ def collect_wallpaper_data(config: dict) -> WallpaperData:
         weather_lines=weather_lines,
         schedule_lines=schedule_lines,
         custom_content=custom_content,
-        reboot_required=reboot_output != "No reboot required.",
+        reboot_status=reboot_status,
     )
+
+
+def _run_status_script(path: Path) -> str:
+    try:
+        result = subprocess.run([str(path)], check=False, capture_output=True, text=True)
+    except FileNotFoundError:
+        return "unknown"
+
+    if result.returncode == 0:
+        return "ok"
+    if result.returncode == 1:
+        return "reboot"
+    return "unknown"
 
 
 def load_custom_content(config: dict) -> dict[str, str | list[str]]:

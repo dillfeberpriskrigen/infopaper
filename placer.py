@@ -45,7 +45,7 @@ FALLBACK_DATA = WallpaperData(
         "hello_world": "Fallback custom content",
         "custom_lines": ["Data import error", "Using built-in preview values"],
     },
-    reboot_required=True,
+    reboot_status="reboot",
 )
 
 
@@ -162,11 +162,20 @@ class PlacerApp:
             "preview_lines",
             self.config.get("schedule", {}).get("max_lines", 8),
         )
+        reboot_content = self.layout["text"]["reboot"].get("content", "Reboot required")
+        reboot_status_content = self.layout["text"]["reboot"].get("content_by_status", {})
+        if isinstance(reboot_status_content, dict):
+            reboot_content = reboot_status_content.get(self.data.reboot_status, reboot_content)
+        elif self.data.reboot_status == "unknown":
+            reboot_content = self.layout["text"]["reboot"].get("unknown_content", reboot_content)
+        elif self.data.reboot_status == "ok":
+            reboot_content = self.layout["text"]["reboot"].get("ok_content", reboot_content)
+
         items = [
             CanvasItem("text.date", "text", self.data.date_label),
             CanvasItem("text.weekday", "text", self.data.weekday_label),
             CanvasItem("text.updates", "text", self.data.update_label or "Uppdateringar: 0"),
-            CanvasItem("text.reboot", "text", self.layout["text"]["reboot"].get("content", "Reboot required")),
+            CanvasItem("text.reboot", "text", reboot_content),
             CanvasItem("weather", "weather", "\n".join(self.data.weather_lines[:3]) or "Weather preview"),
             CanvasItem(
                 "schedule",

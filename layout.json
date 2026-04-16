@@ -32,6 +32,11 @@
       "fontsize": 20,
       "color": 2,
       "content": "Reboot required",
+      "content_by_status": {
+        "ok": "",
+        "reboot": "Reboot required",
+        "unknown": "Reboot status unknown"
+      },
       "visible": true
     }
   },

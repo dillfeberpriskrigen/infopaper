@@ -25,6 +25,8 @@ Current rough edges:
 - External commands are still used for a few system integrations
 - Configuration is local-file driven rather than validated
 
+The reboot check is signal-based rather than message-based. `scripts/rebootcheck.sh` exits with `0` for `ok`, `1` for `reboot`, and `2` for `unknown`. `infopaper` maps that status to text in `layout.json`, so the script does not need to print user-facing strings.
+
 Dependencies:
 
 - `Pillow`
@@ -85,6 +87,24 @@ Schedule rendering is configured in `config.json` under `schedule`, including wh
 
 `layout.json` controls where objects are drawn. It currently supports relative placement modes such as `from_right_fraction` and `from_bottom_fraction`, plus per-block font size, color, visibility, and weather line spacing.
 Dragging an object in `placer.py` saves that block back as an absolute position so the editor can place it directly.
+The reboot text block can use `content` as the default reboot message, plus optional `ok_content`, `unknown_content`, or a `content_by_status` map like this:
+
+```json
+"reboot": {
+  "x": { "mode": "from_left_fraction", "value": 16, "margin": 0 },
+  "y": { "mode": "from_bottom_fraction", "value": 15, "margin": 0 },
+  "font": "DejaVuSans-Bold.ttf",
+  "fontsize": 20,
+  "color": 2,
+  "content": "Reboot required",
+  "content_by_status": {
+    "ok": "",
+    "reboot": "Reboot required",
+    "unknown": "Reboot status unknown"
+  },
+  "visible": true
+}
+```
 
 `calendars.json` controls schedule subscriptions. You can point a source at a local ICS file with `local_path`, or at a public ICS URL with `slug` and `url`. Public calendars are downloaded into `data/calendars/` and then read by `schema.py`.
 
