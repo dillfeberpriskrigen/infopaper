@@ -1,0 +1,7 @@
+
+Suggested next refactors:
+
+1. Move config loading to a typed config object with validation and defaults.
+2. Replace shell-based integrations with safer Python implementations where practical.
+3. Add a minimal test suite around layout helpers and data formatting.
+4. Feed the new schedule subscriptions into the wallpaper renderer once the schedule block layout is ready.

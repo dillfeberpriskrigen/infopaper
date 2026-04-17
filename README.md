@@ -175,10 +175,3 @@ That writes `data/custom/qotd.json`, which is already listed in `config.json` as
 - `in_order_no_repeat`: quote 1, then 2, then 3, looping only after all quotes were used
 
 If you rerun it on the same day, it keeps the same quote unless you pass `--force-next`.
-
-Suggested next refactors:
-
-1. Move config loading to a typed config object with validation and defaults.
-2. Replace shell-based integrations with safer Python implementations where practical.
-3. Add a minimal test suite around layout helpers and data formatting.
-4. Feed the new schedule subscriptions into the wallpaper renderer once the schedule block layout is ready.
