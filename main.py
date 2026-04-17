@@ -5,9 +5,9 @@ from __future__ import annotations
 import shutil
 import subprocess
 
-from collectors import collect_wallpaper_data
-from config import load_config, load_layout
-from renderer import render_wallpaper
+from infopaper.collectors import collect_wallpaper_data
+from infopaper.config import load_config, load_layout
+from infopaper.renderer import render_wallpaper
 
 
 def apply_wallpaper(setter_command: list[str], output_path: str) -> None:

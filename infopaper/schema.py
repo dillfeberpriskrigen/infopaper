@@ -11,7 +11,7 @@ import requests
 from icalendar import Calendar
 from zoneinfo import ZoneInfo
 
-from config import ROOT, load_calendar_sources, load_config
+from infopaper.config import ROOT, load_calendar_sources, load_config
 
 
 CALENDAR_CACHE_DIR = ROOT / "data" / "calendars"

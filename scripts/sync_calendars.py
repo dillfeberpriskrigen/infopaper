@@ -2,7 +2,14 @@
 
 from __future__ import annotations
 
-from schema import sync_public_calendars
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from infopaper.schema import sync_public_calendars
 
 
 def main() -> None:

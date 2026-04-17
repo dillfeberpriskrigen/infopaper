@@ -10,10 +10,10 @@ from typing import Any
 
 from PIL import Image, ImageTk
 
-from collectors import WallpaperData, collect_wallpaper_data
-from config import LAYOUT_PATH, ROOT, load_config, load_layout
-from draw import draw_calendar, load_base_image
-from renderer import _resolve_color, _resolve_x, _resolve_y
+from infopaper.collectors import WallpaperData, collect_wallpaper_data
+from infopaper.config import LAYOUT_PATH, ROOT, load_config, load_layout
+from infopaper.draw import draw_calendar, load_base_image
+from infopaper.renderer import _resolve_color, _resolve_x, _resolve_y
 
 
 PREVIEW_MAX_WIDTH = 1200

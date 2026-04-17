@@ -6,7 +6,7 @@ from typing import Any
 
 from PIL import Image, ImageDraw
 
-from draw import load_font
+from infopaper.draw import load_font
 
 
 def _as_paragraphs(content: str | list[str]) -> list[str]:

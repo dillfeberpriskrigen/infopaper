@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any
 
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "config.json"
 LAYOUT_PATH = ROOT / "layout.json"
 CALENDARS_PATH = ROOT / "calendars.json"

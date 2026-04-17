@@ -8,8 +8,8 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-from colors import colors
-from config import ROOT
+from infopaper.colors import colors
+from infopaper.config import ROOT
 
 
 RESOURCES_DIR = ROOT / "resources"

@@ -1,0 +1,1 @@
+"""Infopaper application package."""

@@ -5,11 +5,11 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from adaptiverendering import draw_adaptive_text_block
-from collectors import WallpaperData
-from colors import colors
-from config import ROOT
-from draw import draw_calendar, draw_text, draw_text_lines, load_base_image, longest_text
+from infopaper.adaptiverendering import draw_adaptive_text_block
+from infopaper.collectors import WallpaperData
+from infopaper.colors import colors
+from infopaper.config import ROOT
+from infopaper.draw import draw_calendar, draw_text, draw_text_lines, load_base_image, longest_text
 
 
 def _resolve_color(color_value: Any):

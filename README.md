@@ -4,9 +4,11 @@ It has been reliable enough for personal use, but the codebase still reflects it
 
 The current structure is split into three main parts:
 
-- `collectors.py` gathers external data
-- `renderer.py` turns that data into a wallpaper image
+- `infopaper/collectors.py` gathers external data
+- `infopaper/renderer.py` turns that data into a wallpaper image
 - `main.py` coordinates the run and applies the finished wallpaper
+
+Reusable application code now lives in the `infopaper/` package. Runnable helper tools live in `scripts/`. Keeping `scripts/` plural is the conventional naming, and it makes the intent a bit clearer than `script/`.
 
 Layout is now stored separately in `layout.json`, so positioning and sizing can evolve independently from runtime behavior in `config.json`.
 
@@ -33,7 +35,6 @@ Dependencies:
 - `requests`
 - `icalendar`
 
-The previous `numpy` dependency was only used to transpose a list and has been removed.
 
 Expected local files:
 
@@ -53,20 +54,20 @@ python3 main.py
 Layout editor:
 
 ```bash
-python3 placer.py
+python3 scripts/placer.py
 ```
 
 Calendar sync:
 
 ```bash
 python3 scripts/sync_calendars.py
-python3 schema.py
+python3 scripts/schema.py
 ```
 
 Quote of the day:
 
 ```bash
-python3 qotd.py
+python3 scripts/qotd.py
 ```
 
 Wallpaper setter configuration lives in `config.json` as a command list, for example:
@@ -83,10 +84,10 @@ This keeps wallpaper application user-configurable without using shell execution
 
 Custom script output is configured in `config.json` under `custom_content.sources`. The app reads those JSON files, merges their keys into the collected content, and draws any keys that also exist in `layout.json`.
 
-Schedule rendering is configured in `config.json` under `schedule`, including whether the block is enabled, which timezone to use, whether public subscriptions should be synced automatically, how many schedule lines should be shown on the wallpaper, how many lines `placer.py` should preview, and the `strftime` time format used for event times.
+Schedule rendering is configured in `config.json` under `schedule`, including whether the block is enabled, which timezone to use, whether public subscriptions should be synced automatically, how many schedule lines should be shown on the wallpaper, how many lines `scripts/placer.py` should preview, and the `strftime` time format used for event times.
 
 `layout.json` controls where objects are drawn. It currently supports relative placement modes such as `from_right_fraction` and `from_bottom_fraction`, plus per-block font size, color, visibility, and weather line spacing.
-Dragging an object in `placer.py` saves that block back as an absolute position so the editor can place it directly.
+Dragging an object in `scripts/placer.py` saves that block back as an absolute position so the editor can place it directly.
 The reboot text block can use `content` as the default reboot message, plus optional `ok_content`, `unknown_content`, or a `content_by_status` map like this:
 
 ```json
@@ -106,7 +107,7 @@ The reboot text block can use `content` as the default reboot message, plus opti
 }
 ```
 
-`calendars.json` controls schedule subscriptions. You can point a source at a local ICS file with `local_path`, or at a public ICS URL with `slug` and `url`. Public calendars are downloaded into `data/calendars/` and then read by `schema.py`.
+`calendars.json` controls schedule subscriptions. You can point a source at a local ICS file with `local_path`, or at a public ICS URL with `slug` and `url`. Public calendars are downloaded into `data/calendars/` and then read by `scripts/schema.py`.
 
 For custom content, a script can write JSON like this:
 
@@ -161,14 +162,14 @@ Quote-of-the-day example:
 3. Run:
 
 ```bash
-python3 qotd.py
+python3 scripts/qotd.py
 ```
 
 That writes `data/custom/qotd.json`, which is already listed in `config.json` as a custom content source. Matching layout keys such as `qotd_quote`, `qotd_author`, or `qotd_lines` can then be enabled in `layout.json`.
 
 `qotd_lines` is set up for adaptive rendering. If you enable it in `layout.json`, the renderer will wrap the quote text inside its configured `box.width` and `box.height`, and reduce the font size down to `min_fontsize` until it fits.
 
-`qotd.py` remembers the selected quote in `data/quotes/qotd_state.json`. It supports:
+`scripts/qotd.py` remembers the selected quote in `data/quotes/qotd_state.json`. It supports:
 
 - `random_no_repeat`: random order without repeating until the pool is exhausted
 - `in_order_no_repeat`: quote 1, then 2, then 3, looping only after all quotes were used

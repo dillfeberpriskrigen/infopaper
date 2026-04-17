@@ -10,8 +10,8 @@ from pathlib import Path
 
 import requests
 
-from config import ROOT
-from schema import build_schedule_days, format_schedule_days, sync_public_calendars
+from infopaper.config import ROOT
+from infopaper.schema import build_schedule_days, format_schedule_days, sync_public_calendars
 
 
 @dataclass(frozen=True)

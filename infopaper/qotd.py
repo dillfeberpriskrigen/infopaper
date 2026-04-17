@@ -9,7 +9,7 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
-from config import ROOT
+from infopaper.config import ROOT
 
 
 DEFAULT_CONFIG_PATH = ROOT / "data" / "quotes" / "qotd_config.json"
